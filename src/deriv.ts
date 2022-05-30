@@ -29,7 +29,7 @@ class Derivator {
         return newArr
     }
 
-    evaluateExpression(derivString: string, evaluateAt: number): void{
+    evaluateExpression(derivString: string, evaluateAt: number): number{
         let twoDarr = this.isolateExponent(derivString)
         let newArr = []
         twoDarr.forEach(val => {
@@ -41,15 +41,16 @@ class Derivator {
         })
         // Replace empty values
         newArr = Array.from(newArr, item => item || 0)
-        this.evaluateFormatted(evaluateAt, newArr)
+        return this.evaluateFormatted(evaluateAt, newArr)
     }
-
+    // "3*x^0 -x^1+ x^2- 4*x^3 +x^5"
     evaluateFormatted(evaluateAt : number, formattedArray: number[]) : number {
         let result = 0;
         if (formattedArray.length <= 1) return 0;
 
-        for (let i = 1; i < formattedArray.length; i++){
-            result += formattedArray[i]*(evaluateAt**i)
+        result += formattedArray[1]*(evaluateAt)
+        for (let i = 2; i < formattedArray.length; i++){
+            result += (formattedArray[i]*i)*(evaluateAt**(i-1))
         }
         return result;
     }
